@@ -10,6 +10,30 @@ export interface EmbeddedPaymentInfo {
   amountCents: number
   platformFeeCents?: number
   stripePaymentIntentId?: string
+  stripeSessionId?: string
+  stripeInvoiceId?: string
+}
+
+export interface TseTransaction {
+  beleg_nr: number
+  kassen_id: string
+  tss_serial_number?: string
+  client_serial_number?: string
+  tx_number: number
+  tx_state: string
+  time_start: number
+  time_end: number
+  signature_value?: string
+  signature_algorithm?: string
+  signature_counter?: number
+  qr_code_data?: string
+  ereceipt_url?: string
+  ereceipt_pdf_url?: string
+  receipt_type?: string
+  total_amount_cents?: number
+  tip_amount_cents?: number
+  payment_type?: string
+  payment_method?: string
 }
 
 export interface OrderLineItemExtra {

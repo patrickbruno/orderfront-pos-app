@@ -1,5 +1,5 @@
 import { authService } from './auth.service'
-import type { Order, TrackingState } from '../types/order'
+import type { Order, TrackingState, TseTransaction } from '../types/order'
 
 interface OrdersResponse {
   success: boolean
@@ -9,9 +9,16 @@ interface OrdersResponse {
   sumCents?: number
 }
 
-interface OrderResponse {
+interface OrderDetailResponse {
   success: boolean
-  data: Order
+  order: Order
+  tse?: TseTransaction
+  customerStatsId?: string
+}
+
+export interface OrderDetail {
+  order: Order
+  tse?: TseTransaction
 }
 
 export const ordersService = {
@@ -38,10 +45,10 @@ export const ordersService = {
     return api.get<OrdersResponse>(`/api/orders${qs ? `?${qs}` : ''}`)
   },
 
-  async fetchOrder(orderId: string): Promise<Order> {
+  async fetchOrder(orderId: string): Promise<OrderDetail> {
     const api = authService.getApiClient()
-    const res = await api.get<OrderResponse>(`/api/orders/${orderId}`)
-    return res.data
+    const res = await api.get<OrderDetailResponse>(`/api/orders/${orderId}`)
+    return { order: res.order, tse: res.tse }
   },
 
   async updateTrackingState(orderId: string, state: TrackingState): Promise<void> {

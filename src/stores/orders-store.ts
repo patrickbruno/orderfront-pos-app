@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { ordersService } from '../services/orders.service'
-import type { Order, TrackingState } from '../types/order'
+import type { Order, TrackingState, TseTransaction } from '../types/order'
 
 interface OrderFilters {
   status?: string
@@ -13,6 +13,7 @@ interface OrderFilters {
 interface OrdersState {
   orders: Order[]
   selectedOrder: Order | null
+  selectedTse: TseTransaction | null
   isLoading: boolean
   isRefreshing: boolean
   error: string | null
@@ -33,6 +34,7 @@ const PAGE_SIZE = 20
 export const useOrdersStore = create<OrdersState>((set, get) => ({
   orders: [],
   selectedOrder: null,
+  selectedTse: null,
   isLoading: false,
   isRefreshing: false,
   error: null,
@@ -68,8 +70,8 @@ export const useOrdersStore = create<OrdersState>((set, get) => ({
 
   fetchOrder: async (id) => {
     try {
-      const order = await ordersService.fetchOrder(id)
-      set({ selectedOrder: order })
+      const { order, tse } = await ordersService.fetchOrder(id)
+      set({ selectedOrder: order, selectedTse: tse ?? null })
     } catch (err: any) {
       set({ error: err.message })
     }
