@@ -18,7 +18,7 @@ import type { SettingsStackParamList } from '../../navigation/SettingsStack'
 type Nav = NativeStackNavigationProp<SettingsStackParamList>
 
 function formatCents(cents: number): string {
-  return (cents / 100).toFixed(2).replace('.', ',') + ' \u20AC'
+  return (cents / 100).toFixed(2).replace('.', ',') + ' €'
 }
 
 function ChannelCard({ channel, onPress }: { channel: ChannelConfig; onPress: () => void }) {
@@ -84,7 +84,7 @@ export function ChannelConfigScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
-      <Header title="Kan\u00E4le" showBack onBack={() => nav.goBack()} />
+      <Header title="Kanäle" showBack onBack={() => nav.goBack()} />
       {isLoading ? (
         <ActivityIndicator style={styles.loader} color={colors.primary} />
       ) : (
@@ -113,7 +113,7 @@ export function ChannelConfigScreen() {
             ))
           ) : (
             <Text style={[styles.emptyText, { color: colors.muted }]}>
-              Keine Kan\u00E4le konfiguriert.
+              Keine Kanäle konfiguriert.
             </Text>
           )}
         </ScrollView>

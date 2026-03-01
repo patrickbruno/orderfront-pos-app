@@ -128,8 +128,8 @@ export function OrderDetailScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
       <Header
-        title={`#${order.orderNumber ?? '\u2014'}`}
-        subtitle={`${order.timing.orderDate} \u00B7 ${order.timing.orderTime}`}
+        title={`#${order.orderNumber ?? '—'}`}
+        subtitle={`${order.timing.orderDate} · ${order.timing.orderTime}`}
         showBack
         onBack={() => nav.goBack()}
       />
@@ -216,7 +216,7 @@ export function OrderDetailScreen() {
           </View>
           {order.pricingCents.deliveryFeeCents > 0 && (
             <View style={styles.summaryRow}>
-              <Text style={[styles.totalLabel, { color: colors.muted }]}>Liefergeb\u00FChr</Text>
+              <Text style={[styles.totalLabel, { color: colors.muted }]}>Liefergebühr</Text>
               <Text style={[styles.text, { color: colors.foreground }]}>
                 {centsToEuros(order.pricingCents.deliveryFeeCents)}
               </Text>
@@ -224,7 +224,7 @@ export function OrderDetailScreen() {
           )}
           {order.pricingCents.serviceFeeCents > 0 && (
             <View style={styles.summaryRow}>
-              <Text style={[styles.totalLabel, { color: colors.muted }]}>Servicegeb\u00FChr</Text>
+              <Text style={[styles.totalLabel, { color: colors.muted }]}>Servicegebühr</Text>
               <Text style={[styles.text, { color: colors.foreground }]}>
                 {centsToEuros(order.pricingCents.serviceFeeCents)}
               </Text>
@@ -262,7 +262,7 @@ export function OrderDetailScreen() {
             />
             {order.payment.platformFeeCents != null && order.payment.platformFeeCents > 0 && (
               <InfoRow
-                label="Plattformgeb\u00FChr"
+                label="Plattformgebühr"
                 value={centsToEuros(order.payment.platformFeeCents)}
                 muted={colors.muted}
               />
@@ -301,7 +301,7 @@ export function OrderDetailScreen() {
               <InfoRow label="Ende" value={formatUnixTimestamp(tse.time_end)} muted={colors.muted} />
             )}
             {tse.signature_counter != null && (
-              <InfoRow label="Signaturz\u00E4hler" value={String(tse.signature_counter)} muted={colors.muted} />
+              <InfoRow label="Signaturzähler" value={String(tse.signature_counter)} muted={colors.muted} />
             )}
 
             {/* eReceipt links */}

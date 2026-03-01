@@ -102,7 +102,7 @@ function EuroField({
           placeholder={placeholder ?? '0,00'}
           placeholderTextColor={colors.muted}
         />
-        <Text style={[styles.inputSuffix, { color: colors.muted }]}>{'\u20AC'}</Text>
+        <Text style={[styles.inputSuffix, { color: colors.muted }]}>{'€'}</Text>
       </View>
     </View>
   )
@@ -325,17 +325,17 @@ export function ChannelDetailScreen() {
               value={config.disabledMessage ?? ''}
               onChange={(v) => update({ disabledMessage: v || null })}
               colors={colors}
-              placeholder="Aktuell nicht verf\u00FCgbar"
+              placeholder="Aktuell nicht verfügbar"
               multiline
             />
           )}
         </Card>
 
-        {/* Geb\u00FChren */}
+        {/* Gebühren */}
         <Card>
-          <SectionHeader title="Geb\u00FChren" colors={colors} />
+          <SectionHeader title="Gebühren" colors={colors} />
           <EuroField
-            label="Liefergeb\u00FChr"
+            label="Liefergebühr"
             valueCents={config.fulfillmentFeeCents}
             onChangeCents={(v) => update({ fulfillmentFeeCents: v })}
             colors={colors}
@@ -348,7 +348,7 @@ export function ChannelDetailScreen() {
           />
           <View style={styles.divider} />
           <ToggleRow
-            label="Servicegeb\u00FChr"
+            label="Servicegebühr"
             value={config.serviceFeeEnabled}
             onValueChange={(v) => update({ serviceFeeEnabled: v })}
             colors={colors}

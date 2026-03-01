@@ -121,7 +121,7 @@ function EuroField({
           placeholder="0,00"
           placeholderTextColor={colors.muted}
         />
-        <Text style={[styles.inputSuffix, { color: colors.muted }]}>{'\u20AC'}</Text>
+        <Text style={[styles.inputSuffix, { color: colors.muted }]}>{'€'}</Text>
       </View>
     </View>
   )
@@ -269,7 +269,7 @@ export function MenuItemDetailScreen() {
               value={draft.outOfStockReason ?? ''}
               onChange={(v) => update({ outOfStockReason: v || undefined })}
               colors={colors}
-              placeholder="z.B. Zutat nicht verf\u00FCgbar"
+              placeholder="z.B. Zutat nicht verfügbar"
             />
           )}
         </Card>
@@ -309,9 +309,9 @@ export function MenuItemDetailScreen() {
           />
         </Card>
 
-        {/* Ern\u00E4hrung */}
+        {/* Ernährung */}
         <Card>
-          <SectionHeader title="Ern\u00E4hrung" colors={colors} />
+          <SectionHeader title="Ernährung" colors={colors} />
           <ToggleRow
             label="Vegetarisch"
             value={draft.isVegetarian}
@@ -346,7 +346,7 @@ export function MenuItemDetailScreen() {
           />
           {draft.isSpicy && (
             <NumberField
-              label="Sch\u00E4rfegrad"
+              label="Schärfegrad"
               value={draft.spiceLevel}
               onChange={(v) => update({ spiceLevel: v ?? undefined })}
               colors={colors}
