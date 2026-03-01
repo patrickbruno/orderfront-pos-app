@@ -8,6 +8,7 @@ interface OrderFilters {
   search?: string
   dateFrom?: string
   dateTo?: string
+  confirmedOnly?: boolean
 }
 
 interface OrdersState {
@@ -40,7 +41,7 @@ export const useOrdersStore = create<OrdersState>((set, get) => ({
   error: null,
   page: 1,
   hasMore: true,
-  filters: {},
+  filters: { confirmedOnly: true },
 
   fetchOrders: async (reset = false) => {
     const { filters } = get()

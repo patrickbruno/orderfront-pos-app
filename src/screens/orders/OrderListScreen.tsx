@@ -1,11 +1,13 @@
 import React, { useEffect, useCallback } from 'react'
 import {
   View,
+  Text,
   FlatList,
   TextInput,
   StyleSheet,
   ActivityIndicator,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
@@ -15,6 +17,7 @@ import { useOrdersStore } from '../../stores/orders-store'
 import { Header } from '../../components/ui/Header'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { OrderCard } from '../../components/orders/OrderCard'
+import { Badge } from '../../components/ui/Badge'
 import { spacing, radii, fontSize } from '../../theme/tokens'
 import type { OrdersStackParamList } from '../../navigation/OrdersStack'
 
@@ -39,12 +42,18 @@ export function OrderListScreen() {
     fetchOrders(true)
   }, [])
 
+  const confirmedOnly = filters.confirmedOnly !== false
+
   const handleSearch = useCallback(
     (text: string) => {
       setFilters({ ...filters, search: text || undefined })
     },
     [filters],
   )
+
+  const toggleConfirmedOnly = useCallback(() => {
+    setFilters({ ...filters, confirmedOnly: !confirmedOnly })
+  }, [filters, confirmedOnly])
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
@@ -64,6 +73,14 @@ export function OrderListScreen() {
           onChangeText={handleSearch}
           clearButtonMode="while-editing"
         />
+        <View style={styles.filterRow}>
+          <TouchableOpacity onPress={toggleConfirmedOnly}>
+            <Badge
+              label={confirmedOnly ? 'Nur bestätigt' : 'Alle'}
+              variant={confirmedOnly ? 'success' : 'muted'}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <FlatList
@@ -104,7 +121,8 @@ export function OrderListScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  searchContainer: { paddingHorizontal: spacing.md, paddingVertical: spacing.sm },
+  searchContainer: { paddingHorizontal: spacing.md, paddingVertical: spacing.sm, gap: spacing.sm },
+  filterRow: { flexDirection: 'row', gap: spacing.xs },
   searchInput: {
     borderWidth: 1,
     borderRadius: radii.md,

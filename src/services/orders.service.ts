@@ -30,6 +30,7 @@ export const ordersService = {
     search?: string
     dateFrom?: string
     dateTo?: string
+    confirmedOnly?: boolean
   } = {}): Promise<OrdersResponse> {
     const api = authService.getApiClient()
     const searchParams = new URLSearchParams()
@@ -40,6 +41,7 @@ export const ordersService = {
     if (params.search) searchParams.set('search', params.search)
     if (params.dateFrom) searchParams.set('dateFrom', params.dateFrom)
     if (params.dateTo) searchParams.set('dateTo', params.dateTo)
+    if (params.confirmedOnly) searchParams.set('confirmedOnly', 'true')
 
     const qs = searchParams.toString()
     return api.get<OrdersResponse>(`/api/orders${qs ? `?${qs}` : ''}`)
