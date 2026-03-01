@@ -20,7 +20,7 @@ import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { TrackingStateBadge, PaymentStatusBadge } from '../../components/orders/OrderStatusBadge'
 import { OrderActions } from '../../components/orders/OrderActions'
-import { spacing, fontSize } from '../../theme/tokens'
+import { spacing, fontSize, radii } from '../../theme/tokens'
 import { centsToEuros } from '../../utils/cents'
 import { DELIVERY_METHOD_LABELS } from '../../types/order'
 import { ordersService } from '../../services/orders.service'
@@ -128,8 +128,10 @@ export function OrderDetailScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
       <Header
-        title={`#${order.orderNumber ?? '—'}`}
-        subtitle={`${order.timing.orderDate} · ${order.timing.orderTime}`}
+        title={order.dayCounter
+          ? `${order.dayCounterPrefix ?? (order.delivery.method === 'delivery' ? 'L' : 'A')}-${order.dayCounter.toString().padStart(3, '0')}`
+          : `#${order.orderNumber ?? '—'}`}
+        subtitle={`#${order.orderNumber ?? '—'} · ${order.timing.orderDate} · ${order.timing.orderTime}`}
         showBack
         onBack={() => nav.goBack()}
       />
@@ -175,9 +177,12 @@ export function OrderDetailScreen() {
             </Text>
           )}
           {order.delivery.instructions && (
-            <Text style={[styles.textMuted, { color: colors.muted }]}>
-              {order.delivery.instructions}
-            </Text>
+            <View style={[styles.instructionBox, { backgroundColor: colors.amber + '18' }]}>
+              <Ionicons name="chatbubble-outline" size={14} color={colors.amber} />
+              <Text style={[styles.instructionText, { color: colors.foreground }]}>
+                {order.delivery.instructions}
+              </Text>
+            </View>
           )}
         </Card>
 
@@ -377,5 +382,17 @@ const styles = StyleSheet.create({
   receiptLinkText: {
     fontSize: fontSize.base,
     fontWeight: '600',
+  },
+  instructionBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.xs,
+    marginTop: spacing.sm,
+    padding: spacing.sm,
+    borderRadius: radii.sm,
+  },
+  instructionText: {
+    fontSize: fontSize.sm,
+    flex: 1,
   },
 })

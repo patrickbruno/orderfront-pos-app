@@ -68,6 +68,7 @@ export interface Order {
   restaurantId?: string
   orderNumber: string | null
   dayCounter?: number
+  dayCounterPrefix?: string
   orderSource?: 'online' | 'kiosk' | 'qr' | 'staff_terminal'
 
   customer: {
